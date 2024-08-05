@@ -1,0 +1,135 @@
+        "AutoARIMA": (AutoARIMA, {
+            "start_p": optuna.distributions.IntUniformDistribution(0, 5),
+            "start_q": optuna.distributions.IntUniformDistribution(0, 5),
+            "max_p": optuna.distributions.IntUniformDistribution(5, 10),
+            "max_q": optuna.distributions.IntUniformDistribution(5, 10),
+            "d": optuna.distributions.IntUniformDistribution(0, 2),
+            "seasonal": [True, False]
+        }),
+        "AutoETS": (AutoETS, {
+            "error": ["add", "mul"],
+            "trend": ["add", "mul", None],
+            "seasonal": ["add", "mul", None],
+            "sp": optuna.distributions.IntUniformDistribution(2, 12)
+        }),
+        "ThetaForecaster": (ThetaForecaster, {
+            "sp": optuna.distributions.IntUniformDistribution(2, 12),
+            "deseasonalize": [True, False]
+        }),
+        "ExponentialSmoothing": (ExponentialSmoothing, {
+            "trend": [None, "add", "mul"],
+            "seasonal": [None, "add", "mul"],
+            "sp": optuna.distributions.IntUniformDistribution(2, 12)
+        }),
+        "BATS": (BATS, {
+            "use_box_cox": [True, False],
+            "use_trend": [True, False],
+            "use_damped_trend": [True, False],
+            "sp": optuna.distributions.IntUniformDistribution(1, 24),
+            "use_arma_errors": [True, False]
+        }),
+        "PolynomialTrendForecaster": (PolynomialTrendForecaster, {
+            "degree": optuna.distributions.IntUniformDistribution(1, 5),
+        }),
+        "SVRRegressor_reduce": (SVR, {
+            "kernel": ["linear", "poly", "rbf", "sigmoid"],
+            "C": optuna.distributions.FloatDistribution(0.1, 10.0),
+            "shrinking": [True, False],
+            "tol": optuna.distributions.FloatDistribution(1e-4, 1e-1, log=True),
+            "max_iter": optuna.distributions.IntUniformDistribution(100, 1000),
+        }),
+        "CINNForecaster": (CINNForecaster, {
+            "n_coupling_layers": optuna.distributions.IntUniformDistribution(1, 20),
+            "hidden_dim_size": optuna.distributions.IntUniformDistribution(16, 128),
+            "sample_dim": optuna.distributions.IntUniformDistribution(10, 50),
+            "batch_size": optuna.distributions.IntUniformDistribution(32, 128),
+            "encoded_cond_size": optuna.distributions.IntUniformDistribution(32, 128),
+            "lr": optuna.distributions.FloatDistribution(1e-5, 1e-3, log=True),
+            "weight_decay": optuna.distributions.FloatDistribution(1e-6, 1e-4, log=True),
+            "sp_list": [[24], [12, 24], [24, 48]],  # Example options
+            "fourier_terms_list": [[1, 1], [2, 2], [3, 3]],  # Example options
+            "window_size": optuna.distributions.IntUniformDistribution(24, 720),
+            "num_epochs": optuna.distributions.IntUniformDistribution(10, 100),
+            "deterministic": [True, False],
+            "patience": optuna.distributions.IntUniformDistribution(3, 10),
+            "delta": optuna.distributions.FloatDistribution(1e-5, 1e-3, log=True),
+            "val_split": optuna.distributions.FloatDistribution(0.1, 0.3)
+        }),
+
+        "TimeSeriesForestRegressor_reduce": (TimeSeriesForestRegressor, {
+            "n_estimators": optuna.distributions.IntUniformDistribution(20, 150)
+        }),
+        "RandomForestRegressor_reduce": (RandomForestRegressor, {
+            "n_estimators": optuna.distributions.IntUniformDistribution(50, 200),
+            "max_depth": optuna.distributions.IntUniformDistribution(5, 30),
+            "min_samples_split": optuna.distributions.IntUniformDistribution(2, 10),
+            "min_samples_leaf": optuna.distributions.IntUniformDistribution(1, 10)
+        }),
+        "RidgeRegressor_reduce": (Ridge, {
+            "alpha": optuna.distributions.FloatDistribution(0.1, 10.0)
+        }),
+        "XGBRegressor_reduce": (XGBRegressor, {
+            "n_estimators": optuna.distributions.IntUniformDistribution(50, 200),
+            "max_depth": optuna.distributions.IntUniformDistribution(3, 10),
+            "learning_rate": optuna.distributions.FloatDistribution(0.01, 0.3),
+            "subsample": optuna.distributions.FloatDistribution(0.5, 1.0),
+            "colsample_bytree": optuna.distributions.FloatDistribution(0.5, 1.0)
+        }),
+        "LGBMRegressor_reduce": (LGBMRegressor, {
+            "n_estimators": optuna.distributions.IntUniformDistribution(50, 200),
+            "max_depth": optuna.distributions.IntUniformDistribution(3, 10),
+            "learning_rate": optuna.distributions.FloatDistribution(0.01, 0.3),
+            "num_leaves": optuna.distributions.IntUniformDistribution(20, 100),
+            "feature_fraction": optuna.distributions.FloatDistribution(0.5, 1.0),
+            "bagging_fraction": optuna.distributions.FloatDistribution(0.5, 1.0),
+            "bagging_freq": optuna.distributions.IntUniformDistribution(1, 10),
+            "verbose": [0]
+        }),
+        "CatBoostRegressor_reduce": (CatBoostRegressor, {
+            "iterations": optuna.distributions.IntUniformDistribution(100, 1000),
+            "depth": optuna.distributions.IntUniformDistribution(3, 10),
+            "learning_rate": optuna.distributions.FloatDistribution(0.01, 0.3),
+            "l2_leaf_reg": optuna.distributions.FloatDistribution(1, 10),
+            "border_count": optuna.distributions.IntUniformDistribution(32, 255),
+            "verbose": [0]
+        }),
+        "InceptionTimeRegressor_reduce": (InceptionTimeRegressor, {
+            "n_epochs": optuna.distributions.IntUniformDistribution(500, 1500),
+            "batch_size": optuna.distributions.IntUniformDistribution(32, 128),
+            "kernel_size": optuna.distributions.IntUniformDistribution(10, 50),
+            "n_filters": optuna.distributions.IntUniformDistribution(16, 64),
+            "use_residual": [True, False],
+            "use_bottleneck": [True, False],
+            "bottleneck_size": optuna.distributions.IntUniformDistribution(16, 64),
+            "depth": optuna.distributions.IntUniformDistribution(1, 10),
+            "loss": ["mean_squared_error"],
+        }),
+        "ResNetRegressor_reduce": (ResNetRegressor, {
+            "n_epochs": optuna.distributions.IntUniformDistribution(500, 1500),
+            "batch_size": optuna.distributions.IntUniformDistribution(16, 128),
+            "activation": ["linear", "relu", "sigmoid", "tanh"],
+            "use_bias": [True, False],
+            "optimizer": ["adam", "sgd", "rmsprop", "adagrad"],
+            "loss": ["mean_squared_error", "mean_absolute_error"],
+        }),
+        "RocketRegressor_reduce": (RocketRegressor, {
+            "num_kernels": optuna.distributions.IntUniformDistribution(5000, 20000),
+            "rocket_transform": ["rocket", "minirocket", "multirocket"],
+            "max_dilations_per_kernel": optuna.distributions.IntUniformDistribution(1, 64),
+            "n_features_per_kernel": optuna.distributions.IntUniformDistribution(1, 8),
+            "use_multivariate": ["auto", True, False],
+            "n_jobs": optuna.distributions.IntUniformDistribution(1, 16),
+            "random_state": optuna.distributions.IntUniformDistribution(0, 1000)
+        }),
+        "KNeighborsTimeSeriesregressor_reduce": (KNeighborsTimeSeriesRegressor, {
+            "n_neighbors": optuna.distributions.IntUniformDistribution(1, 20),
+            "weights": ["uniform", "distance"],
+            "algorithm": ["brute"],
+            "distance": ["euclidean", "dtw", "erp", "lcss", "msm", "twe", "wdtw", "wddtw", "squared"],
+            "distance_params": [None],  # Optional, could also be tuned if desired
+            "pass_train_distances": [True, False],
+            "leaf_size": optuna.distributions.IntUniformDistribution(10, 50),
+            "n_jobs": optuna.distributions.IntUniformDistribution(1, 16)
+        })
+
+    }
